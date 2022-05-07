@@ -38,8 +38,19 @@ if ! test -f "${HOME}/.dput.cf"; then
 EOF
 fi
 
-## Upgrade operating system
-apt-get update && apt-get upgrade --yes
+## Adapt uid and gid, if necessary
+if test ${PGID:-1000} -ne $(id -g); then
+	sudo groupmod --non-unique --gid ${PGID:-1000} maintainer
+fi
+
+if test ${PUID:-1000} -ne $(id -u); then
+	sudo usermod --non-unique --uid ${PUID:-1000} maintainer
+fi
+
+## Adapt timezone
+if test -f /usr/share/zoneinfo/${TZ}; then
+	sudo ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime
+fi
 
 ## Run bash
 /bin/bash
