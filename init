@@ -10,18 +10,18 @@ cp "${HOME}/.bashrc_orig" "${HOME}/.bashrc"
 cat >> "${HOME}/.bashrc" <<-EOF
 	#
 	# Tools setup for debian packaging
-	DEBEMAIL=${DP_EMAIL}
-	DEBFULLNAME=${DP_FULLNAME}
+	DEBEMAIL=${EMAIL}
+	DEBFULLNAME=${FULLNAME}
 	export DEBEMAIL DEBFULLNAME
-	git config --global user.email ${DP_EMAIL}
-	git config --global user.name ${DP_FULLNAME}
+	git config --global user.email ${EMAIL}
+	git config --global user.name ${FULLNAME}
 EOF
 
 if ! test -f "${HOME}/.devscripts"; then
 	cat > "/root/.devscripts" <<-EOF
 		DEBUILD_DPKG_BUILDPACKAGE_OPTS="-i -I -us -uc"
 		DEBUILD_LINTIAN_OPTS="-i -I --show-overrides"
-		DEBSIGN_KEYID=${DP_GPGKEYID}
+		DEBSIGN_KEYID=${GPGKEYID}
 EOF
 fi
 

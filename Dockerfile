@@ -1,7 +1,7 @@
 ARG         CODENAME
 FROM        debian:${CODENAME:-latest}
 ENV         DEBIAN_FRONTEND=noninteractive
-ADD         entrypoint.sh /entrypoint.sh
+ADD         init /usr/local/bin/init
 RUN         apt-get update \
             && apt-get upgrade --yes \
             && apt-get install --yes \
@@ -17,6 +17,6 @@ RUN         apt-get update \
             && apt-get clean \
             && rm -rf /var/lib/apt/lists/* \
             && ln -sf /usr/share/zoneinfo/Europe/Zurich /etc/localtime \
-            && chmod +x /entrypoint.sh
-ENTRYPOINT  ["/entrypoint.sh"]
+            && chmod +x /usr/local/bin/init
+ENTRYPOINT  ["/usr/local/bin/init"]
 LABEL       org.opencontainers.image.authors="robin.alexander@netplus.ch"
