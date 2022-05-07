@@ -1,0 +1,10 @@
+#Ignoring git and cache folders
+.git
+.cache
+
+#Ignoring all the markdown and class files
+*.md
+
+#Ignoring other files
+LICENSE
+env.list
