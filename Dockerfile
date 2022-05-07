@@ -17,6 +17,9 @@ RUN         apt-get update \
             && apt-get clean \
             && rm -rf /var/lib/apt/lists/* \
             && ln -sf /usr/share/zoneinfo/Europe/Zurich /etc/localtime \
-            && chmod +x /usr/local/bin/init
+            && chmod +x /usr/local/bin/init \
+            && useradd -ms /bin/bash maintainer
 ENTRYPOINT  ["/usr/local/bin/init"]
 LABEL       org.opencontainers.image.authors="robin.alexander@netplus.ch"
+USER        maintainer
+WORKDIR     /home/maintainer
