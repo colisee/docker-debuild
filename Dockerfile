@@ -1,7 +1,6 @@
 ARG         CODENAME
 FROM        debian:${CODENAME:-latest}
 ENV         DEBIAN_FRONTEND=noninteractive
-ADD         init /usr/local/bin/init
 RUN         apt-get update \
             && apt-get upgrade --yes \
             && apt-get install --yes \
@@ -13,12 +12,14 @@ RUN         apt-get update \
                 pkg-config \
                 quilt \
                 reportbug \
+                sudo \
                 tzdata \
             && apt-get clean \
-            && rm -rf /var/lib/apt/lists/* \
-            && ln -sf /usr/share/zoneinfo/Europe/Zurich /etc/localtime \
-            && chmod +x /usr/local/bin/init \
-            && useradd -ms /bin/bash maintainer
+            && rm -rf /var/lib/apt/lists/*
+ADD         init /usr/local/bin/init
+RUN         chmod +x /usr/local/bin/init \
+            && useradd --create-home --user-group --shell /bin/bash maintainer \
+            && echo "maintainer     ALL=(ALL:ALL)   NOPASSWD: ALL" > /etc/sudoers.d/maintainer
 ENTRYPOINT  ["/usr/local/bin/init"]
 LABEL       org.opencontainers.image.authors="robin.alexander@netplus.ch"
 USER        maintainer
