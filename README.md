@@ -25,7 +25,7 @@ The goal of this container is to provide a lite debian environment where you can
       --env-file list.env \
       --volume "${HOME}/.gnupg:/home/maintainer/.gnupg" \
       --volume "${DEB_PKG}:/home/maintainer/package" \
-      colisee/docker-debuild
+      colisee/debuild
    ```
 1. Once inside the container:
    - you are user `maintainer` 
