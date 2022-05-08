@@ -10,18 +10,18 @@ cp "${HOME}/.bashrc_orig" "${HOME}/.bashrc"
 cat >> "${HOME}/.bashrc" <<-EOF
 	#
 	# Tools setup for debian packaging
-	DEBEMAIL=${DP_EMAIL}
-	DEBFULLNAME=${DP_FULLNAME}
+	DEBEMAIL=${EMAIL}
+	DEBFULLNAME=${FULLNAME}
 	export DEBEMAIL DEBFULLNAME
-	git config --global user.email ${DP_EMAIL}
-	git config --global user.name ${DP_FULLNAME}
+	git config --global user.email ${EMAIL}
+	git config --global user.name ${FULLNAME}
 EOF
 
 if ! test -f "${HOME}/.devscripts"; then
-	cat > "/root/.devscripts" <<-EOF
+	cat > "${HOME}/.devscripts" <<-EOF
 		DEBUILD_DPKG_BUILDPACKAGE_OPTS="-i -I -us -uc"
 		DEBUILD_LINTIAN_OPTS="-i -I --show-overrides"
-		DEBSIGN_KEYID=${DP_GPGKEYID}
+		DEBSIGN_KEYID=${GPGKEYID}
 EOF
 fi
 
@@ -38,8 +38,19 @@ if ! test -f "${HOME}/.dput.cf"; then
 EOF
 fi
 
-## Upgrade operating system
-apt-get update && apt-get upgrade --yes
+## Adapt uid and gid, if necessary
+if test ${PGID:-1000} -ne $(id -g); then
+	sudo groupmod --non-unique --gid ${PGID:-1000} maintainer
+fi
+
+if test ${PUID:-1000} -ne $(id -u); then
+	sudo usermod --non-unique --uid ${PUID:-1000} maintainer
+fi
+
+## Adapt timezone
+if test -f /usr/share/zoneinfo/${TZ}; then
+	sudo ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime
+fi
 
 ## Run bash
 /bin/bash

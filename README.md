@@ -1,26 +1,32 @@
 # docker-debuild
 
 ## Introduction
-The goal of this container is to provide a debian sid environment on which a maintainer can run packaging activities, such as:
+The goal of this container is to provide a lite debian environment where you can can perform packaging activities, such as:
+- Recording bug issues with `reportbug`
 - Grabbing files over the network with `curl`
 - Preparing debian packages with `debmake`
 - Modifying package-related files with `nano`
-- Packaging software with `debuild`
-- Recording bug issues with `reportbug`
+- Building and signing your debian package(s) with `debuild`
+- Pushing your debian package(s) on menors.debian.net with `dput`
+- Running exceptionally root-related tasks with `sudo`
 
 ## Instructions
-1. Import the docker image into your host
+1. Adapt file `list.env`:
+1. Define the path of your debian package directory as follows:
    ```
-   docker pull colisee/docker-build:latest"
-   ```
-1. Create file `env.list` with the following content:
-   ```
-   DP_EMAIL="your_email_address"
-   DP_FULLNAME="first_name last_name"
-   DP_GPGKEYID="your_GPG_key-id"
+   DEB_PKG=path_to_your_debian_package_on_your_host"
    ```
 1. Start the container
    ```
-   docker run -it --env-file env.list -v "${HOME}/.gnupg:/root/.gnupg" -v "debian_package_directory_on_host:/mnt" colisee/docker-debuild:latest
+   docker run \
+      --interactive \
+      --tty \
+      --rm \
+      --env-file list.env \
+      --volume "${HOME}/.gnupg:/home/maintainer/.gnupg" \
+      --volume "${DEB_PKG}:/home/maintainer/package" \
+      colisee/docker-debuild
    ```
-1. Inside the container, go to the `/mnt` directory and perform your packaging activities
+1. Once inside the container:
+   - you are user `maintainer` 
+   - go to the `$HOME/package` directory and perform your packaging activities
