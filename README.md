@@ -24,6 +24,7 @@ The goal of this container is to provide a lite debian environment where you can
       --rm \
       --env-file list.env \
       --volume "${HOME}/.gnupg:/home/maintainer/.gnupg" \
+      --volume "${HOME}/.ssh:/home/maintainer/.ssh" \
       --volume "${DEB_PKG}:/home/maintainer/package" \
       colisee/debuild
    ```
