@@ -16,7 +16,7 @@ The goal of this container is to provide a lite debian environment where you can
    ```
    DEB_PKG=path_to_your_debian_package_on_your_host"
    ```
-1. Start the container
+1. Run the container
    ```
    docker run \
       --interactive \
