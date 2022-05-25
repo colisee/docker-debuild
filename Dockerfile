@@ -6,7 +6,7 @@ RUN         apt-get update \
             && apt-get install --yes \
                 build-essential \
                 debmake \
-                devscripts \
+                git-buildpackage \
                 libtool \
                 nano \
                 pkg-config \

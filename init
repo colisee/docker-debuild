@@ -26,7 +26,7 @@ EOF
 fi
 
 if ! test -f "${HOME}/.dput.cf"; then
-	cat > "${HOME}/.dput.cf" <<- EOF
+	cat > "${HOME}/.dput.cf" <<-EOF
 		[mentors]
 		fqdn = mentors.debian.net
 		incoming = /upload
@@ -35,6 +35,14 @@ if ! test -f "${HOME}/.dput.cf"; then
 		progress_indicator = 2
 		# Allow uploads for UNRELEASED packages
 		allowed_distributions = .*
+EOF
+fi
+
+if ! test -f "${HOME}/.gbp.conf"; then
+	cat > "${HOME}/.gbp.conf" <<-EOF
+		[DEFAULT]
+		pristine-tar = True
+		color = auto
 EOF
 fi
 
