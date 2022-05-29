@@ -4,10 +4,9 @@
 This container provides a lite debian environment where you can can perform debian packaging activities, such as:
 - Recording bug issues with `reportbug`
 - Grabbing files over the network with `curl`
-- Buidling a package environment with `gbp`
-- Preparing debian packages with `debmake`
-- Modifying files with `nano`
-- Building and signing your debian package(s) with `debuild`
+- cloning repositories with `git`
+- Editing text files with `nano`
+- Use `devscripts` or `git-buildpackage` tools to build and sign your debian packages
 - Pushing your debian package(s) on mentors.debian.net with `dput`
 - Running exceptionally root-related tasks with `sudo`
 

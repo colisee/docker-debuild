@@ -60,5 +60,12 @@ if test -f /usr/share/zoneinfo/${TZ}; then
 	sudo ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime
 fi
 
+## Update & upgrade if applicable
+sudo apt update
+sudo apt upgrade --yes 
+
+## Call ssh-agent
+eval "$(ssh-agent -s)"
+
 ## Run bash
 /bin/bash
