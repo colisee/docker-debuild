@@ -9,7 +9,6 @@ RUN         apt-get update \
                 git-buildpackage \
                 libtool \
                 nano \
-                pkg-config \
                 quilt \
                 reportbug \
                 sudo \
